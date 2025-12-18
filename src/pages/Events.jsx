@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
-import { base44 } from '@/api/base44Client';
+import { apiClient } from '@/api/apiClient';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import EventCard from '../components/events/EventCard';
@@ -22,7 +22,7 @@ export default function Events() {
 
   const { data: events = [], isLoading } = useQuery({
     queryKey: ['events'],
-    queryFn: () => base44.entities.Event.filter({ active: true }, 'date', 50)
+    queryFn: () => apiClient.entities.Event.filter({ active: true }, 'date', 50)
   });
 
   const t = {

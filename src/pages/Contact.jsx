@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { base44 } from '@/api/base44Client';
+import { apiClient } from '@/api/apiClient';
 import { useMutation } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -29,14 +29,14 @@ export default function Contact() {
 
   const sendEmailMutation = useMutation({
     mutationFn: async (data) => {
-      await base44.integrations.Core.SendEmail({
+      await apiClient.integrations.Core.SendEmail({
         from_name: 'Portell Contact Form',
         to: 'contact@portell.wine',
         subject: `[Contact Form] ${data.subject}`,
         body: `New contact form submission:\n\nName: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone}\n\nMessage:\n${data.message}`
       });
 
-      await base44.integrations.Core.SendEmail({
+      await apiClient.integrations.Core.SendEmail({
         from_name: 'Portell Winery',
         to: data.email,
         subject: language === 'pl' ? 'Dziękujemy za kontakt' : 'Thank you for contacting us',

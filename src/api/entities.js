@@ -1,15 +1,15 @@
-import { base44 } from './base44Client';
+import { apiClient } from './apiClient';
 
 
-export const Product = base44.entities.Product;
+export const Product = apiClient.entities.Product;
 
-export const Event = base44.entities.Event;
+export const Event = apiClient.entities.Event;
 
-export const Booking = base44.entities.Booking;
+export const Booking = apiClient.entities.Booking;
 
-export const Order = base44.entities.Order;
+export const Order = apiClient.entities.Order;
 
 
 
 // auth sdk:
-export const User = base44.auth;
+export const User = apiClient.auth;

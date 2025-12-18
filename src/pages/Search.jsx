@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
-import { base44 } from '@/api/base44Client';
+import { apiClient } from '@/api/apiClient';
 import { useQuery } from '@tanstack/react-query';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -43,12 +43,12 @@ export default function Search() {
 
   const { data: products = [], isLoading: productsLoading } = useQuery({
     queryKey: ['products'],
-    queryFn: () => base44.entities.Product.filter({ active: true }, '-created_date', 100)
+    queryFn: () => apiClient.entities.Product.filter({ active: true }, '-created_date', 100)
   });
 
   const { data: events = [], isLoading: eventsLoading } = useQuery({
     queryKey: ['events'],
-    queryFn: () => base44.entities.Event.filter({ active: true }, 'date', 100)
+    queryFn: () => apiClient.entities.Event.filter({ active: true }, 'date', 100)
   });
 
   const t = {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '../utils';
-import { base44 } from '@/api/base44Client';
+import { apiClient } from '@/api/apiClient';
 import { useQuery } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -29,22 +29,22 @@ export default function AdminDashboard() {
 
   const { data: products = [] } = useQuery({
     queryKey: ['products'],
-    queryFn: () => base44.entities.Product.list('-created_date', 1000)
+    queryFn: () => apiClient.entities.Product.list('-created_date', 1000)
   });
 
   const { data: events = [] } = useQuery({
     queryKey: ['events'],
-    queryFn: () => base44.entities.Event.list('-date', 1000)
+    queryFn: () => apiClient.entities.Event.list('-date', 1000)
   });
 
   const { data: bookings = [] } = useQuery({
     queryKey: ['bookings'],
-    queryFn: () => base44.entities.Booking.list('-created_date', 1000)
+    queryFn: () => apiClient.entities.Booking.list('-created_date', 1000)
   });
 
   const { data: orders = [] } = useQuery({
     queryKey: ['orders'],
-    queryFn: () => base44.entities.Order.list('-created_date', 1000)
+    queryFn: () => apiClient.entities.Order.list('-created_date', 1000)
   });
 
   const t = {

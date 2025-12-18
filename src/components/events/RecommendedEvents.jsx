@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { base44 } from '@/api/base44Client';
+import { apiClient } from '@/api/apiClient';
 import { useQuery } from '@tanstack/react-query';
 import { Loader2, Sparkles } from 'lucide-react';
 import EventCard from './EventCard';
@@ -10,15 +10,15 @@ export default function RecommendedEvents({ language, currentEventId = null, lim
 
   const { data: allEvents = [] } = useQuery({
     queryKey: ['events'],
-    queryFn: () => base44.entities.Event.filter({ active: true }, 'date', 100)
+    queryFn: () => apiClient.entities.Event.filter({ active: true }, 'date', 100)
   });
 
   const { data: userBookings = [] } = useQuery({
     queryKey: ['user-bookings'],
     queryFn: async () => {
       try {
-        const user = await base44.auth.me();
-        return await base44.entities.Booking.filter({ customer_email: user.email }, '-created_date', 50);
+        const user = await apiClient.auth.me();
+        return await apiClient.entities.Booking.filter({ customer_email: user?.email }, '-created_date', 50);
       } catch {
         return [];
       }
@@ -73,7 +73,7 @@ export default function RecommendedEvents({ language, currentEventId = null, lim
         
         context += `Return ONLY the event IDs as a JSON array of strings, e.g., ["id1", "id2", "id3"]. Base recommendations on user preferences and event similarity.`;
 
-        const response = await base44.integrations.Core.InvokeLLM({
+        const response = await apiClient.integrations.Core.InvokeLLM({
           prompt: context,
           response_json_schema: {
             type: "object",

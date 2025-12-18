@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '../utils';
-import { base44 } from '@/api/base44Client';
+import { apiClient } from '@/api/apiClient';
 import { useMutation } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -99,7 +99,7 @@ export default function Checkout() {
         const eventItem = checkoutItems[0];
         const confirmationCode = `PORTELL-EVENT-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
 
-        const booking = await base44.entities.Booking.create({
+        const booking = await apiClient.entities.Booking.create({
           event_id: eventItem.id,
           customer_name: checkoutData.customer_name,
           customer_email: checkoutData.customer_email,
@@ -113,11 +113,11 @@ export default function Checkout() {
           gdpr_consent: checkoutData.gdpr_consent,
         });
 
-        const events = await base44.entities.Event.filter({ id: eventItem.id });
+        const events = await apiClient.entities.Event.filter({ id: eventItem.id });
         const eventData = events && events.length > 0 ? events[0] : null;
         
         if (eventData) {
-          await base44.entities.Event.update(eventItem.id, {
+          await apiClient.entities.Event.update(eventItem.id, {
             booked_count: (eventData.booked_count || 0) + eventItem.quantity
           });
         }
@@ -137,7 +137,7 @@ export default function Checkout() {
           special_requests: eventItem.formData?.special_requests || ''
         }, language);
 
-        await base44.integrations.Core.SendEmail({
+        await apiClient.integrations.Core.SendEmail({
           from_name: 'Portell Winery',
           to: checkoutData.customer_email,
           subject: language === 'pl' ? `Potwierdzenie rezerwacji - ${eventTitle}` : `Booking Confirmation - ${eventTitle}`,
@@ -161,7 +161,7 @@ export default function Checkout() {
       } else {
         const orderNumber = `PORTELL-${Date.now()}`;
         
-        const order = await base44.entities.Order.create({
+        const order = await apiClient.entities.Order.create({
           ...checkoutData,
           order_number: orderNumber,
           status: 'pending',
@@ -183,7 +183,7 @@ export default function Checkout() {
           payment_method: paymentMethodText
         }, language);
 
-        await base44.integrations.Core.SendEmail({
+        await apiClient.integrations.Core.SendEmail({
           from_name: 'Portell Winery',
           to: checkoutData.customer_email,
           subject: language === 'pl' ? `Potwierdzenie zamówienia ${orderNumber}` : `Order confirmation ${orderNumber}`,
