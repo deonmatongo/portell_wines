@@ -91,7 +91,7 @@ export default function Home() {
     <div className="bg-neutral-50">
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden bg-neutral-900">
-        <div className="absolute inset-0 bg-[url('https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/storage/public/69431027d88b346325b4161a/fa1d1e281_2023-07-11_13-35-34_UTC.jpg')] bg-cover bg-center opacity-30" />
+        <div className="absolute inset-0 bg-[url('https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/portell/public/69431027d88b346325b4161a/fa1d1e281_2023-07-11_13-35-34_UTC.jpg')] bg-cover bg-center opacity-30" />
         
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <motion.div
@@ -235,7 +235,7 @@ export default function Home() {
               className="aspect-square bg-neutral-100 rounded-sm overflow-hidden"
             >
               <img
-                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/storage/public/69431027d88b346325b4161a/ede8b0c24_2023-03-17_15-53-01_UTC.jpg"
+                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/portell/public/69431027d88b346325b4161a/ede8b0c24_2023-03-17_15-53-01_UTC.jpg"
                 alt="Portell Wine"
                 className="w-full h-full object-cover"
               />
@@ -324,25 +324,25 @@ export default function Home() {
                 type: 'red', 
                 title: language === 'pl' ? 'Czerwone' : 'Red wines',
                 desc: language === 'pl' ? 'Głębokie, intensywne' : 'Deep, intense',
-                image: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/storage/public/69431027d88b346325b4161a/212c0c2a5_2023-04-02_12-18-39_UTC.jpg'
+                image: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/portell/public/69431027d88b346325b4161a/212c0c2a5_2023-04-02_12-18-39_UTC.jpg'
               },
               { 
                 type: 'white', 
                 title: language === 'pl' ? 'Białe' : 'White wines',
                 desc: language === 'pl' ? 'Świeże, eleganckie' : 'Fresh, elegant',
-                image: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/storage/public/69431027d88b346325b4161a/eaef5fb37_2023-07-30_09-23-10_UTC.jpg'
+                image: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/portell/public/69431027d88b346325b4161a/eaef5fb37_2023-07-30_09-23-10_UTC.jpg'
               },
               { 
                 type: 'rose', 
                 title: language === 'pl' ? 'Różowe' : 'Rosé wines',
                 desc: language === 'pl' ? 'Delikatne, orzeźwiające' : 'Delicate, refreshing',
-                image: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/storage/public/69431027d88b346325b4161a/fa1d1e281_2023-07-11_13-35-34_UTC.jpg'
+                image: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/portell/public/69431027d88b346325b4161a/fa1d1e281_2023-07-11_13-35-34_UTC.jpg'
               },
               { 
                 type: 'sparkling', 
                 title: language === 'pl' ? 'Musujące' : 'Sparkling',
                 desc: language === 'pl' ? 'Świąteczne, wyjątkowe' : 'Celebratory, special',
-                image: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/storage/public/69431027d88b346325b4161a/50966cb72_2023-06-19_09-32-54_UTC.jpg'
+                image: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/portell/public/69431027d88b346325b4161a/50966cb72_2023-06-19_09-32-54_UTC.jpg'
               }
             ].map((category, index) => (
               <motion.div
@@ -627,7 +627,7 @@ export default function Home() {
               className="aspect-[4/3] bg-neutral-100 rounded-sm overflow-hidden"
             >
               <img
-                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/storage/public/69431027d88b346325b4161a/6b8c7119e_2023-12-19_11-27-21_UTC.jpg"
+                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/portell/public/69431027d88b346325b4161a/6b8c7119e_2023-12-19_11-27-21_UTC.jpg"
                 alt="Portell Sparkling Wine"
                 className="w-full h-full object-cover"
               />
