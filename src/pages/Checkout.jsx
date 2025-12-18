@@ -249,7 +249,7 @@ export default function Checkout() {
         addToCalendar: 'Dodaj do kalendarza'
       },
       subtotal: 'Suma częściowa',
-      shipping: 'Dostawa',
+      shippingLabel: 'Dostawa',
       shippingFee: 'Bezpłatna',
       total: 'Łącznie',
       gdpr: 'Wyrażam zgodę na przetwarzanie danych osobowych',
@@ -301,7 +301,7 @@ export default function Checkout() {
         addToCalendar: 'Add to calendar'
       },
       subtotal: 'Subtotal',
-      shipping: 'Shipping',
+      shippingLabel: 'Shipping',
       shippingFee: 'Free',
       total: 'Total',
       gdpr: 'I consent to data processing',
@@ -738,7 +738,7 @@ export default function Checkout() {
                   </div>
                   {checkoutType === 'product' && (
                     <div className="flex justify-between text-neutral-600">
-                      <span>{t.shipping}</span>
+                      <span>{t.shippingLabel}</span>
                       <span className="text-green-600">{t.shippingFee}</span>
                     </div>
                   )}
