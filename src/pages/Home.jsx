@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Wine, Calendar, Sparkles, MapPin, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { DEFAULT_IMAGES, getImageUrl } from '@/utils/images';
 
 export default function Home() {
   const [language, setLanguage] = useState(localStorage.getItem('portell_lang') || 'pl');
@@ -91,7 +92,7 @@ export default function Home() {
     <div className="bg-neutral-50">
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden bg-neutral-900">
-        <div className="absolute inset-0 bg-[url('https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/portell/public/69431027d88b346325b4161a/fa1d1e281_2023-07-11_13-35-34_UTC.jpg')] bg-cover bg-center opacity-30" />
+        <div className="absolute inset-0 bg-[url('https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/portell/public/69431027d88b346325b4161a/portell-hero-promotional.jpg')] bg-cover bg-center opacity-30" />
         
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <motion.div
@@ -160,17 +161,11 @@ export default function Home() {
                   <Link to={createPageUrl(`ProductDetail?id=${product.id}`)}>
                     <div className="group cursor-pointer">
                       <div className="aspect-[3/4] bg-neutral-100 rounded-sm overflow-hidden mb-6">
-                        {product.image_url ? (
-                          <img
-                            src={product.image_url}
-                            alt={language === 'en' && product.name_en ? product.name_en : product.name}
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                          />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center">
-                            <Wine className="w-16 h-16 text-neutral-300" />
-                          </div>
-                        )}
+                        <img
+                          src={getImageUrl(product.image_url, product.category)}
+                          alt={language === 'en' && product.name_en ? product.name_en : product.name}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
                       </div>
                       <h3 className="text-xl font-light text-neutral-900 mb-2 group-hover:text-[var(--portell-burgundy)] transition-colors">
                         {language === 'en' && product.name_en ? product.name_en : product.name}
@@ -235,7 +230,7 @@ export default function Home() {
               className="aspect-square bg-neutral-100 rounded-sm overflow-hidden"
             >
               <img
-                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/portell/public/69431027d88b346325b4161a/ede8b0c24_2023-03-17_15-53-01_UTC.jpg"
+                src={DEFAULT_IMAGES.about}
                 alt="Portell Wine"
                 className="w-full h-full object-cover"
               />
@@ -266,13 +261,11 @@ export default function Home() {
                   className="bg-white rounded-sm overflow-hidden shadow-sm hover:shadow-lg transition-shadow"
                 >
                   <div className="aspect-[16/9] bg-neutral-100">
-                    {event.image_url && (
-                      <img
-                        src={event.image_url}
-                        alt={language === 'en' && event.title_en ? event.title_en : event.title}
-                        className="w-full h-full object-cover"
-                      />
-                    )}
+                    <img
+                      src={getImageUrl(event.image_url, 'event')}
+                      alt={language === 'en' && event.title_en ? event.title_en : event.title}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <div className="p-8">
                     <div className="flex items-center gap-2 text-sm text-neutral-500 mb-3">
@@ -324,25 +317,25 @@ export default function Home() {
                 type: 'red', 
                 title: language === 'pl' ? 'Czerwone' : 'Red wines',
                 desc: language === 'pl' ? 'Głębokie, intensywne' : 'Deep, intense',
-                image: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/portell/public/69431027d88b346325b4161a/212c0c2a5_2023-04-02_12-18-39_UTC.jpg'
+                image: DEFAULT_IMAGES.categories.red
               },
               { 
                 type: 'white', 
                 title: language === 'pl' ? 'Białe' : 'White wines',
                 desc: language === 'pl' ? 'Świeże, eleganckie' : 'Fresh, elegant',
-                image: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/portell/public/69431027d88b346325b4161a/eaef5fb37_2023-07-30_09-23-10_UTC.jpg'
+                image: DEFAULT_IMAGES.categories.white
               },
               { 
                 type: 'rose', 
                 title: language === 'pl' ? 'Różowe' : 'Rosé wines',
                 desc: language === 'pl' ? 'Delikatne, orzeźwiające' : 'Delicate, refreshing',
-                image: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/portell/public/69431027d88b346325b4161a/fa1d1e281_2023-07-11_13-35-34_UTC.jpg'
+                image: DEFAULT_IMAGES.categories.rose
               },
               { 
                 type: 'sparkling', 
                 title: language === 'pl' ? 'Musujące' : 'Sparkling',
                 desc: language === 'pl' ? 'Świąteczne, wyjątkowe' : 'Celebratory, special',
-                image: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/portell/public/69431027d88b346325b4161a/50966cb72_2023-06-19_09-32-54_UTC.jpg'
+                image: DEFAULT_IMAGES.categories.sparkling
               }
             ].map((category, index) => (
               <motion.div
@@ -627,7 +620,7 @@ export default function Home() {
               className="aspect-[4/3] bg-neutral-100 rounded-sm overflow-hidden"
             >
               <img
-                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/portell/public/69431027d88b346325b4161a/6b8c7119e_2023-12-19_11-27-21_UTC.jpg"
+                src={DEFAULT_IMAGES.sparkling}
                 alt="Portell Sparkling Wine"
                 className="w-full h-full object-cover"
               />

@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Wine, ShoppingCart } from 'lucide-react';
 import { toast } from 'sonner';
+import { getImageUrl } from '@/utils/images';
 
 export default function ProductCard({ product, language }) {
   const addToCart = (e) => {
@@ -67,17 +68,11 @@ export default function ProductCard({ product, language }) {
       <div className="group cursor-pointer bg-white rounded-sm overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500">
         {/* Image */}
         <div className="aspect-[3/4] bg-neutral-100 overflow-hidden relative">
-          {product.image_url ? (
-            <img
-              src={product.image_url}
-              alt={language === 'en' && product.name_en ? product.name_en : product.name}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center">
-              <Wine className="w-16 h-16 text-neutral-300" />
-            </div>
-          )}
+          <img
+            src={getImageUrl(product.image_url, product.category)}
+            alt={language === 'en' && product.name_en ? product.name_en : product.name}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
           
           {/* Category Badge */}
           {product.category && (

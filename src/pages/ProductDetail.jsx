@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, ShoppingCart, Wine, Loader2, Plus, Minus } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
+import { getImageUrl } from '@/utils/images';
 
 export default function ProductDetail() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -110,7 +111,8 @@ export default function ProductDetail() {
     );
   }
 
-  const images = [product.image_url, ...(product.gallery || [])].filter(Boolean);
+  const defaultImage = getImageUrl(null, product?.category);
+  const images = [product?.image_url || defaultImage, ...(product?.gallery || [])].filter(Boolean);
   const isOutOfStock = product.stock !== undefined && product.stock <= 0;
   const isLimitedStock = product.stock !== undefined && product.stock > 0 && product.stock <= 10;
 
@@ -130,17 +132,11 @@ export default function ProductDetail() {
             transition={{ duration: 0.8 }}
           >
             <div className="aspect-[3/4] bg-neutral-100 rounded-sm overflow-hidden mb-4">
-              {images[selectedImage] ? (
-                <img
-                  src={images[selectedImage]}
-                  alt={language === 'en' && product.name_en ? product.name_en : product.name}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center">
-                  <Wine className="w-20 h-20 text-neutral-300" />
-                </div>
-              )}
+              <img
+                src={images[selectedImage] || defaultImage}
+                alt={language === 'en' && product.name_en ? product.name_en : product.name}
+                className="w-full h-full object-cover"
+              />
             </div>
 
             {images.length > 1 && (

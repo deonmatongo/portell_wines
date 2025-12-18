@@ -4,6 +4,7 @@ import { createPageUrl } from '../../utils';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Calendar, MapPin, Users, Clock, ArrowRight } from 'lucide-react';
+import { getImageUrl, DEFAULT_IMAGES } from '@/utils/images';
 
 export default function EventCard({ event, language }) {
   const spotsLeft = event.capacity - (event.booked_count || 0);
@@ -48,17 +49,11 @@ export default function EventCard({ event, language }) {
     <div className="bg-white rounded-sm overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 group">
       {/* Image */}
       <div className="aspect-[4/3] bg-neutral-100 overflow-hidden relative">
-        {event.image_url ? (
-          <img
-            src={event.image_url}
-            alt={language === 'en' && event.title_en ? event.title_en : event.title}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <Calendar className="w-16 h-16 text-neutral-300" />
-          </div>
-        )}
+        <img
+          src={getImageUrl(event.image_url, 'event')}
+          alt={language === 'en' && event.title_en ? event.title_en : event.title}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+        />
         
         {/* Event Type Badge */}
         <div className="absolute top-4 left-4">
