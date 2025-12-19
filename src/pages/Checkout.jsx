@@ -95,10 +95,30 @@ export default function Checkout() {
 
   const checkoutMutation = useMutation({
     mutationFn: async (checkoutData) => {
+      console.log('Starting checkout mutation for type:', checkoutType);
+      console.log('Checkout data:', checkoutData);
+      
       if (checkoutType === 'event') {
         const eventItem = checkoutItems[0];
+        if (!eventItem || !eventItem.id) {
+          throw new Error(language === 'pl' ? 'Błąd: Brak danych wydarzenia.' : 'Error: No event data.');
+        }
+
+        console.log('Creating booking for event:', eventItem.id);
         const confirmationCode = `PORTELL-EVENT-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
 
+        // First, get the event data to ensure it exists
+        let eventData;
+        try {
+          console.log('Fetching event data...');
+          eventData = await apiClient.entities.Event.get(eventItem.id);
+          console.log('Event data fetched:', eventData);
+        } catch (eventError) {
+          console.error('Error fetching event:', eventError);
+          throw new Error(language === 'pl' ? 'Wydarzenie nie zostało znalezione.' : 'Event not found.');
+        }
+
+        console.log('Creating booking...');
         const booking = await apiClient.entities.Booking.create({
           event_id: eventItem.id,
           customer_name: checkoutData.customer_name,
@@ -112,19 +132,19 @@ export default function Checkout() {
           confirmation_code: confirmationCode,
           gdpr_consent: checkoutData.gdpr_consent,
         });
+        console.log('Booking created:', booking);
 
-        const events = await apiClient.entities.Event.filter({ id: eventItem.id });
-        const eventData = events && events.length > 0 ? events[0] : null;
-        
-        if (eventData) {
-          await apiClient.entities.Event.update(eventItem.id, {
-            booked_count: (eventData.booked_count || 0) + eventItem.quantity
-          });
-        }
+        // Update the event's booked_count
+        console.log('Updating event booked_count...');
+        await apiClient.entities.Event.update(eventItem.id, {
+          booked_count: (eventData.booked_count || 0) + eventItem.quantity
+        });
+        console.log('Event updated');
         
         const eventTitle = eventItem.name;
         const eventDateFormatted = eventData?.date ? new Date(eventData.date).toLocaleDateString(language === 'pl' ? 'pl-PL' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
         
+        console.log('Creating email HTML...');
         const emailHTML = createBookingEmailHTML({
           customer_name: checkoutData.customer_name,
           confirmation_code: confirmationCode,
@@ -137,13 +157,21 @@ export default function Checkout() {
           special_requests: eventItem.formData?.special_requests || ''
         }, language);
 
-        await apiClient.integrations.Core.SendEmail({
-          from_name: 'Portell Winery',
-          to: checkoutData.customer_email,
-          subject: language === 'pl' ? `Potwierdzenie rezerwacji - ${eventTitle}` : `Booking Confirmation - ${eventTitle}`,
-          body: emailHTML
-        });
+        try {
+          await apiClient.integrations.Core.SendEmail({
+            from_name: 'Portell Winery',
+            to: checkoutData.customer_email,
+            subject: language === 'pl' ? `Potwierdzenie rezerwacji - ${eventTitle}` : `Booking Confirmation - ${eventTitle}`,
+            body: emailHTML
+          });
+          console.log('Email sent successfully');
+        } catch (emailError) {
+          console.error('Email sending failed:', emailError);
+          // Don't fail the booking if email fails, just log it
+          toast.error(language === 'pl' ? 'Rezerwacja utworzona, ale wysłanie emaila nie powiodło się.' : 'Booking created, but email sending failed.');
+        }
 
+        console.log('Booking process completed successfully');
         return { 
           type: 'booking', 
           number: confirmationCode, 
@@ -183,12 +211,18 @@ export default function Checkout() {
           payment_method: paymentMethodText
         }, language);
 
-        await apiClient.integrations.Core.SendEmail({
-          from_name: 'Portell Winery',
-          to: checkoutData.customer_email,
-          subject: language === 'pl' ? `Potwierdzenie zamówienia ${orderNumber}` : `Order confirmation ${orderNumber}`,
-          body: emailHTML
-        });
+        try {
+          await apiClient.integrations.Core.SendEmail({
+            from_name: 'Portell Winery',
+            to: checkoutData.customer_email,
+            subject: language === 'pl' ? `Potwierdzenie zamówienia ${orderNumber}` : `Order confirmation ${orderNumber}`,
+            body: emailHTML
+          });
+        } catch (emailError) {
+          console.error('Email sending failed:', emailError);
+          // Don't fail the order if email fails, just log it
+          toast.error(language === 'pl' ? 'Zamówienie utworzone, ale wysłanie emaila nie powiodło się.' : 'Order created, but email sending failed.');
+        }
 
         return { type: 'order', number: orderNumber };
       }
@@ -202,6 +236,12 @@ export default function Checkout() {
         sessionStorage.removeItem('portell_checkout_item');
       }
       setCurrentStep(4);
+    },
+    onError: (error) => {
+      console.error('Checkout error:', error);
+      const errorMessage = error?.message || error?.error?.message || 
+        (language === 'pl' ? 'Wystąpił błąd podczas przetwarzania. Spróbuj ponownie.' : 'An error occurred while processing. Please try again.');
+      toast.error(errorMessage);
     }
   });
 

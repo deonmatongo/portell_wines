@@ -353,26 +353,37 @@ export const apiClient = {
     Core: {
       SendEmail: async (data) => {
         try {
+          console.log('SendEmail called with:', { 
+            to: data.to, 
+            subject: data.subject,
+            hasBody: !!data.body 
+          });
+
           const response = await fetch('/api/send-email', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              from: data.from_name ? `${data.from_name} <noreply@portell.wine>` : 'Portell Winery <noreply@portell.wine>',
+              // Use Resend's default domain for now (onboarding@resend.dev)
+              // Once you verify portell.wine domain in Resend, change this to:
+              // from: data.from_name ? `${data.from_name} <noreply@portell.wine>` : 'Portell Winery <noreply@portell.wine>',
+              from: data.from_name ? `${data.from_name} <onboarding@resend.dev>` : 'Portell Winery <onboarding@resend.dev>',
               to: data.to,
               subject: data.subject,
               html: data.body,
             }),
           });
 
+          const responseData = await response.json();
+
           if (!response.ok) {
-            const error = await response.json();
-            throw new Error(error.error || 'Failed to send email');
+            console.error('Email API error response:', responseData);
+            throw new Error(responseData.error || 'Failed to send email');
           }
 
-          const result = await response.json();
-          return { success: true, id: result.id };
+          console.log('Email sent successfully:', responseData);
+          return { success: true, id: responseData.id };
         } catch (error) {
           console.error('Email sending error:', error);
           throw error;
