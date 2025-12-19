@@ -5,8 +5,8 @@
 const BASE_STORAGE_URL = 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/portell/public/69431027d88b346325b4161a';
 
 export const DEFAULT_IMAGES = {
-  // Hero section - Portell promotional graphic with bottles
-  hero: `${BASE_STORAGE_URL}/portell-hero-promotional-graphic.jpg`,
+  // Hero section - Portell rosé wine bottle on beach
+  hero: `${BASE_STORAGE_URL}/portell-rose-beach-bottle.jpg`,
   
   // Product defaults by category
   red: `${BASE_STORAGE_URL}/portell-merlot-red-wine-bottle.jpg`,
