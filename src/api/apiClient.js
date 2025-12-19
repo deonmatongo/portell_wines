@@ -352,10 +352,31 @@ export const apiClient = {
   integrations: {
     Core: {
       SendEmail: async (data) => {
-        // Note: Supabase doesn't have built-in email sending
-        // You'll need to use a service like Resend, SendGrid, or Supabase Edge Functions
-        console.warn('SendEmail not implemented - use a third-party service or Edge Function');
-        return { success: true };
+        try {
+          const response = await fetch('/api/send-email', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              from: data.from_name ? `${data.from_name} <noreply@portell.wine>` : 'Portell Winery <noreply@portell.wine>',
+              to: data.to,
+              subject: data.subject,
+              html: data.body,
+            }),
+          });
+
+          if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.error || 'Failed to send email');
+          }
+
+          const result = await response.json();
+          return { success: true, id: result.id };
+        } catch (error) {
+          console.error('Email sending error:', error);
+          throw error;
+        }
       },
       InvokeLLM: async (data) => {
         // Note: Implement using Supabase Edge Functions or external API
