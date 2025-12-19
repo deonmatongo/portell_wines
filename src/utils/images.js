@@ -1,35 +1,35 @@
 // Portell Wine Images
 // These are default images to use when products/events don't have images
-// Update these URLs with your actual uploaded image paths
+// Using existing image files from storage
 
-const BASE_STORAGE_URL = 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/portell/public/69431027d88b346325b4161a';
+const BASE_STORAGE_URL = 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69431027d88b346325b4161a';
 
 export const DEFAULT_IMAGES = {
-  // Hero section - Portell rosé wine bottle on beach
-  hero: `${BASE_STORAGE_URL}/portell-rose-beach-bottle.jpg`,
+  // Hero section - Portell rosé wine bottle on beach (using existing image)
+  hero: `${BASE_STORAGE_URL}/fa1d1e281_2023-07-11_13-35-34_UTC.jpg`,
   
-  // Product defaults by category
-  red: `${BASE_STORAGE_URL}/portell-merlot-red-wine-bottle.jpg`,
-  white: `${BASE_STORAGE_URL}/portell-blanc-de-blancs-white-wine.jpg`,
-  rose: `${BASE_STORAGE_URL}/portell-rose-beach-bottle.jpg`,
-  sparkling: `${BASE_STORAGE_URL}/portell-cava-brut-nature-reserva.jpg`,
-  bundle: `${BASE_STORAGE_URL}/portell-six-cava-bottles-collection.jpg`,
+  // Product defaults by category (using existing images)
+  red: `${BASE_STORAGE_URL}/212c0c2a5_2023-04-02_12-18-39_UTC.jpg`,
+  white: `${BASE_STORAGE_URL}/eaef5fb37_2023-07-30_09-23-10_UTC.jpg`,
+  rose: `${BASE_STORAGE_URL}/fa1d1e281_2023-07-11_13-35-34_UTC.jpg`,
+  sparkling: `${BASE_STORAGE_URL}/6b8c7119e_2023-12-19_11-27-21_UTC.jpg`,
+  bundle: `${BASE_STORAGE_URL}/ede8b0c24_2023-03-17_15-53-01_UTC.jpg`,
   
-  // Default product image - Cava Brut Nature Reserva
-  product: `${BASE_STORAGE_URL}/portell-cava-brut-nature-reserva.jpg`,
+  // Default product image
+  product: `${BASE_STORAGE_URL}/fa1d1e281_2023-07-11_13-35-34_UTC.jpg`,
   
-  // Event defaults - Cava in ice bucket with strawberries
-  event: `${BASE_STORAGE_URL}/portell-cava-ice-bucket-strawberries.jpg`,
+  // Event defaults
+  event: `${BASE_STORAGE_URL}/ede8b0c24_2023-03-17_15-53-01_UTC.jpg`,
   
-  // About section - Three Portell Cava bottles
-  about: `${BASE_STORAGE_URL}/portell-three-cava-bottles.jpg`,
+  // About section
+  about: `${BASE_STORAGE_URL}/ede8b0c24_2023-03-17_15-53-01_UTC.jpg`,
   
   // Category images
   categories: {
-    red: `${BASE_STORAGE_URL}/portell-merlot-red-wine-bottle.jpg`,
-    white: `${BASE_STORAGE_URL}/portell-blanc-de-blancs-white-wine.jpg`,
-    rose: `${BASE_STORAGE_URL}/portell-rose-beach-bottle.jpg`,
-    sparkling: `${BASE_STORAGE_URL}/portell-cava-brut-nature-reserva.jpg`
+    red: `${BASE_STORAGE_URL}/212c0c2a5_2023-04-02_12-18-39_UTC.jpg`,
+    white: `${BASE_STORAGE_URL}/eaef5fb37_2023-07-30_09-23-10_UTC.jpg`,
+    rose: `${BASE_STORAGE_URL}/fa1d1e281_2023-07-11_13-35-34_UTC.jpg`,
+    sparkling: `${BASE_STORAGE_URL}/6b8c7119e_2023-12-19_11-27-21_UTC.jpg`
   }
 };
 

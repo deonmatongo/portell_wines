@@ -92,7 +92,7 @@ export default function Home() {
     <div className="bg-neutral-50">
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden bg-neutral-900">
-        <div className="absolute inset-0 bg-[url('https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/portell/public/69431027d88b346325b4161a/portell-rose-beach-bottle.jpg')] bg-cover bg-center opacity-30" />
+        <div className="absolute inset-0 bg-[url('https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69431027d88b346325b4161a/fa1d1e281_2023-07-11_13-35-34_UTC.jpg')] bg-cover bg-center opacity-30" />
         
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <motion.div
